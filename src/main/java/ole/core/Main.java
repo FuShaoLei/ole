@@ -54,7 +54,7 @@ public class Main {
     private static void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(testFolderUrl + Instant.CONTENT_URL);
 
-        nodeList.forEach(System.err::println);
+//        nodeList.forEach(System.err::println);
 
         // 清空publish目录
         FolderUtils.deleteFolder(testFolderUrl + Instant.PUBLISH_URL);
@@ -89,6 +89,10 @@ public class Main {
             if (fileNode.isArticle()) {
                 try {
                     Map<String, Object> input = new HashMap<>();
+
+                    System.err.println(fileNode.getName() + " ------------------------- ");
+                    nodeList.forEach(item-> System.err.println(fileNode.getName()+" => "+item));
+
                     input.put("nodeList", nodeList);
 
                     File inputFile = new File(fileNode.getLocalPath());

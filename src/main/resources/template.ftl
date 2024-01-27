@@ -13,7 +13,7 @@
         }
 
         body {
-            font-size: 1.4rem;
+            font-size: .9rem;
             background-color: #2E3033;
             color: #DEDEDE;
         }
@@ -37,7 +37,7 @@
 
         .rightArea {
             bottom: 0px;
-            left: 300px;
+            left: 350px;
             overflow: auto;
             padding-left: 0.5em;
             padding-right: 0.5em;
@@ -45,7 +45,6 @@
             right: 0px;
             text-align: left;
             top: 0em;
-            max-
         }
     </style>
     <title>${title}</title>
@@ -54,20 +53,13 @@
 <body>
 <main>
     <aside class="leftArea">
-<#--        <#list nodeList as nodeItem>-->
-<#--            <#if nodeItem.isArticle()>-->
-<#--                <a href="${nodeItem.url}">${nodeItem.name}</a>-->
-<#--            <#elseif nodeItem.isFolder()>-->
-<#--                <div class="menu-item">-->
-<#--                    <div class="menu-title">./${nodeItem.name}</div>-->
-<#--                    <ul>-->
-<#--                        <#list nodeItem.fileNodeList as childrenItem>-->
-<#--                            <li><a href="${childrenItem.url}">${childrenItem.name}</a></li>-->
-<#--                        </#list>-->
-<#--                    </ul>-->
-<#--                </div>-->
-<#--            </#if>-->
-<#--        </#list>-->
+        <#list nodeList as nodeItem>
+            <#if nodeItem.isArticle() >
+                <a href="${nodeItem.url}">${nodeItem.name}</a>
+            <#else>
+                欸嘿嘿 folder
+            </#if>
+        </#list>
     </aside>
 
     <article class="rightArea">
