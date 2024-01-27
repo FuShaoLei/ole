@@ -34,7 +34,7 @@ public class FileNode implements Serializable {
     /**
      * 文件的本地绝对路径
      */
-    private String path;
+    private String localPath;
 
     /**
      * 文件的内容
@@ -83,12 +83,12 @@ public class FileNode implements Serializable {
         this.url = url;
     }
 
-    public String getPath() {
-        return path;
+    public String getLocalPath() {
+        return localPath;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
     }
 
     public String getContent() {
@@ -113,7 +113,7 @@ public class FileNode implements Serializable {
                 "type=" + type +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", path='" + path + '\'' +
+                ", path='" + localPath + '\'' +
                 ", content='" + content + '\'' +
                 '\'' + ", fileNodeList=" + fileNodeList +
                 '}';

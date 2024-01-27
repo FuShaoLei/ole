@@ -5,8 +5,14 @@ public class Instant {
     public static final String BASE_URL = "baseUrl";
 
 
-    // 放原始md文件的文件夹
+    /**
+     * 原始的md文件的路径
+     */
     public static final String CONTENT_URL = "\\content";
 
 
+    /**
+     * 编译过后的html文件路径
+     */
+    public static final String PUBLISH_URL = "\\publish";
 }
