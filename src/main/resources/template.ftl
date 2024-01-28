@@ -71,7 +71,9 @@
         </aside>
 
         <article class="rightArea">
-            ${article}
+            <div class="article-wrapper">
+                ${article}
+            </div>
         </article>
     </main>
     </body>

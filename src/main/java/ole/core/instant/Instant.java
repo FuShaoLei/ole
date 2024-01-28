@@ -15,4 +15,11 @@ public class Instant {
      * 编译过后的html文件路径
      */
     public static final String PUBLISH_URL = "\\publish";
+
+
+    /**
+     * 要编译成index文件的文件名
+     */
+    public static final String ROOT_INDEX_FILE = "README.md";
+
 }

@@ -93,9 +93,6 @@ public class Main {
                 try {
                     Map<String, Object> input = new HashMap<>();
 
-//                    System.err.println(fileNode.getName() + " ------------------------- ");
-//                    nodeList.forEach(item-> System.err.println(fileNode.getName()+" => "+item));
-
                     input.put("nodeList", allFileNodeList);
 
                     File inputFile = new File(fileNode.getLocalPath());
@@ -129,6 +126,8 @@ public class Main {
         List<FileNode> rootNodeList = new ArrayList<>();
         File inputFile = new File(path);
 
+        int rootLevel = 0;
+
         File[] files = inputFile.listFiles();
         if (files == null) return null;
 
@@ -148,7 +147,12 @@ public class Main {
                 }
                 rootNodeList.add(folder);
             } else if (itemFile.isFile()) {
-                rootNodeList.add(getArticleNode(itemFile));
+
+                if (itemFile.getName().equals(Instant.ROOT_INDEX_FILE)) {
+                    rootNodeList.add(getArticleNode(itemFile, "index.html"));
+                } else {
+                    rootNodeList.add(getArticleNode(itemFile));
+                }
             }
         }
         return rootNodeList;
@@ -180,7 +184,18 @@ public class Main {
         article.setName(itemFile.getName());
         article.setLocalPath(itemFile.getAbsolutePath());
         article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(itemFile.getName()));
-//                article.setContent("gugubird test " + itemFile.getName());
+        return article;
+    }
+
+    /**
+     * @param itemFile
+     * @param name     指定html名
+     */
+    private static FileNode getArticleNode(@NotNull File itemFile, String name) {
+        FileNode article = new FileNode(FileNode.Type.FILE);
+        article.setName(name);
+        article.setLocalPath(itemFile.getAbsolutePath());
+        article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(name));
         return article;
     }
 

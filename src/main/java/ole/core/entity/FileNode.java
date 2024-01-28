@@ -42,6 +42,11 @@ public class FileNode implements Serializable {
     private String content;
 
     /**
+     * 层级
+     */
+    private int level;
+
+    /**
      * 文件夹的里的东西
      */
     private List<FileNode> fileNodeList = new ArrayList<>();
@@ -79,6 +84,14 @@ public class FileNode implements Serializable {
         return url;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
     public void setUrl(String url) {
         this.url = url;
     }
@@ -113,9 +126,10 @@ public class FileNode implements Serializable {
                 "type=" + type +
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
-                ", path='" + localPath + '\'' +
+                ", localPath='" + localPath + '\'' +
                 ", content='" + content + '\'' +
-                '\'' + ", fileNodeList=" + fileNodeList +
+                ", level=" + level +
+                ", fileNodeList=" + fileNodeList +
                 '}';
     }
 }
