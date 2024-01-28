@@ -2,11 +2,11 @@
     <#list nodeList as nodeItem>
         <#assign indentation = ""?right_pad(nodeItem.level,">")>
         <#if nodeItem.isArticle() >
-            <div>
+            <div class="article-item">
                 ${indentation} <a href="${nodeItem.url}">${nodeItem.name}</a>
             </div>
         <#elseif nodeItem.isFolder()>
-            <div class="folder-wrapper">
+            <div class="folder-wrapper <#if nodeItem.level == 0 >folder-top-wrapper</#if>">
                 <div class="folder-name">${indentation} ${nodeItem.name}</div>
                 <#if nodeItem.fileNodeList??>
                     <@renderObjects nodeItem.fileNodeList/>
@@ -24,7 +24,7 @@
         :root {
             --left-with: 300px;
             --color-bg: #1E1F22;
-            --color-theme-main: #28ABAE;
+            --color-theme-main: antiquewhite;
             --color-text-main: #A9A9B3;
             --color-text-secondary: #333437;
             --color-embellish: #26282E;
@@ -87,12 +87,17 @@
             max-width: 100%;
         }
 
-        .folder-wrapper {
-            margin-top: 10px;
+        .folder-top-wrapper {
+            margin-top: 12px;
         }
 
         .folder-name {
-            color: var(--color-theme-main);
+            font-weight: 900;
+            font-size: 1rem;
+            color: antiquewhite;
+        }
+        .article-item{
+            margin: 2px 0;
         }
     </style>
     <title>${title}</title>
