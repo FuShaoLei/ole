@@ -57,7 +57,7 @@ public class Main {
 
         allFileNodeList = nodeList;
 
-//        nodeList.forEach(System.err::println);
+        nodeList.forEach(System.err::println);
 
         // 清空publish目录
         FolderUtils.deleteFolder(testFolderUrl + Instant.PUBLISH_URL);
@@ -137,38 +137,42 @@ public class Main {
             if (itemFile.isDirectory()) {
                 FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
                 folder.setName(itemFile.getName());
+                folder.setLevel(rootLevel);
                 File[] direFiles = itemFile.listFiles();
                 if (direFiles != null) {
                     List<FileNode> childrenNodeList = new ArrayList<>();
                     for (File direFile : direFiles) {
-                        childrenNodeList.add(getNode(direFile));
+                        childrenNodeList.add(getNode(direFile, rootLevel));
                     }
                     folder.setFileNodeList(childrenNodeList);
                 }
                 rootNodeList.add(folder);
             } else if (itemFile.isFile()) {
-
                 if (itemFile.getName().equals(Instant.ROOT_INDEX_FILE)) {
-                    rootNodeList.add(getArticleNode(itemFile, "index.html"));
+                    rootNodeList.add(getArticleNode(itemFile, "index.html", rootLevel));
                 } else {
-                    rootNodeList.add(getArticleNode(itemFile));
+                    rootNodeList.add(getArticleNode(itemFile, rootLevel));
                 }
             }
         }
         return rootNodeList;
     }
 
-    private static FileNode getNode(File rootFile) {
+    /**
+     * 获取文件夹下的数据信息
+     */
+    private static FileNode getNode(File rootFile, int level) {
         if (rootFile.isFile()) {
-            return getArticleNode(rootFile);
+            return getArticleNode(rootFile, level+1);
         } else if (rootFile.isDirectory()) {
             FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
             folder.setName(rootFile.getName());
+            folder.setLevel(level+1);
             File[] direFiles = rootFile.listFiles();
             List<FileNode> childrenNodeList = new ArrayList<>();
             if (direFiles != null) {
                 for (File itemFile : direFiles) {
-                    childrenNodeList.add(getNode(itemFile));
+                    childrenNodeList.add(getNode(itemFile,level+1));
                 }
                 folder.setFileNodeList(childrenNodeList);
             }
@@ -179,11 +183,12 @@ public class Main {
     }
 
 
-    private static FileNode getArticleNode(@NotNull File itemFile) {
+    private static FileNode getArticleNode(@NotNull File itemFile, int level) {
         FileNode article = new FileNode(FileNode.Type.FILE);
         article.setName(itemFile.getName());
         article.setLocalPath(itemFile.getAbsolutePath());
         article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(itemFile.getName()));
+        article.setLevel(level);
         return article;
     }
 
@@ -191,11 +196,12 @@ public class Main {
      * @param itemFile
      * @param name     指定html名
      */
-    private static FileNode getArticleNode(@NotNull File itemFile, String name) {
+    private static FileNode getArticleNode(@NotNull File itemFile, String name, int level) {
         FileNode article = new FileNode(FileNode.Type.FILE);
         article.setName(name);
         article.setLocalPath(itemFile.getAbsolutePath());
         article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(name));
+        article.setLevel(level);
         return article;
     }
 

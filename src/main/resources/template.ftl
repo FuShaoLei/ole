@@ -1,11 +1,17 @@
 <#macro renderObjects nodeList>
     <#list nodeList as nodeItem>
+        <#assign indentation = "">
+        <#if nodeItem.level == 1>
+            <#assign indentation = "-">
+        <#elseif nodeItem.level == 2>
+            <#assign indentation = "--">
+        </#if>
         <#if nodeItem.isArticle() >
             <div>
-                <a href="${nodeItem.url}">${nodeItem.name}</a>
+                <a href="${nodeItem.url}">${indentation} ${nodeItem.name}</a>
             </div>
         <#elseif nodeItem.isFolder()>
-            <div>${nodeItem.name}</div>
+            <div>${indentation} ${nodeItem.name}</div>
             <#if nodeItem.fileNodeList??>
                 <@renderObjects nodeItem.fileNodeList/>
             </#if>
