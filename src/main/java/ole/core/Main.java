@@ -27,6 +27,7 @@ public class Main {
     private static final String testFolderUrl = "F:\\code\\base";
     private static Map<String, Object> ymlData = new HashMap<>();
 
+    private static List<FileNode> allFileNodeList = new ArrayList<>();
 
     public static void main(String[] args) {
         System.out.println("Hello world!");
@@ -53,6 +54,8 @@ public class Main {
 
     private static void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(testFolderUrl + Instant.CONTENT_URL);
+
+        allFileNodeList = nodeList;
 
 //        nodeList.forEach(System.err::println);
 
@@ -90,10 +93,10 @@ public class Main {
                 try {
                     Map<String, Object> input = new HashMap<>();
 
-                    System.err.println(fileNode.getName() + " ------------------------- ");
-                    nodeList.forEach(item-> System.err.println(fileNode.getName()+" => "+item));
+//                    System.err.println(fileNode.getName() + " ------------------------- ");
+//                    nodeList.forEach(item-> System.err.println(fileNode.getName()+" => "+item));
 
-                    input.put("nodeList", nodeList);
+                    input.put("nodeList", allFileNodeList);
 
                     File inputFile = new File(fileNode.getLocalPath());
                     File outputFile = new File(getLocalOutputPath(fileNode.getName()));

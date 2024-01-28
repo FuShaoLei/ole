@@ -1,5 +1,19 @@
-<!DOCTYPE html>
+<#macro renderObjects nodeList>
+    <#list nodeList as nodeItem>
+        <#if nodeItem.isArticle() >
+            <div>
+                <a href="${nodeItem.url}">${nodeItem.name}</a>
+            </div>
+        <#elseif nodeItem.isFolder()>
+            <div>${nodeItem.name}</div>
+            <#if nodeItem.fileNodeList??>
+                <@renderObjects nodeItem.fileNodeList/>
+            </#if>
+        </#if>
+    </#list>
+</#macro>
 
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <style type="text/css">
@@ -18,7 +32,7 @@
             color: #DEDEDE;
         }
 
-        body a{
+        body a {
             color: #DEDEDE;
         }
 
@@ -50,20 +64,16 @@
     <title>${title}</title>
 </head>
 
-<body>
-<main>
-    <aside class="leftArea">
-        <#list nodeList as nodeItem>
-            <#if nodeItem.isArticle() >
-                <a href="${nodeItem.url}">${nodeItem.name}</a>
-            <#else>
-                欸嘿嘿 folder
-            </#if>
-        </#list>
-    </aside>
+    <body>
+    <main>
+        <aside class="leftArea">
+            <@renderObjects nodeList/>
+        </aside>
 
-    <article class="rightArea">
-        ${article}
-    </article>
-</main>
-</body>
+        <article class="rightArea">
+            ${article}
+        </article>
+    </main>
+    </body>
+</html>
+
