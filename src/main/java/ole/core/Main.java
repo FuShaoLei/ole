@@ -54,11 +54,14 @@ public class Main {
 
     private static void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(testFolderUrl + Instant.CONTENT_URL);
-
         allFileNodeList = nodeList;
-
         nodeList.forEach(System.err::println);
 
+        ready2Generate();
+
+    }
+
+    private static void ready2Generate() {
         // 清空publish目录
         FolderUtils.deleteFolder(testFolderUrl + Instant.PUBLISH_URL);
         File newFile = new File(testFolderUrl + Instant.PUBLISH_URL);
@@ -77,12 +80,10 @@ public class Main {
 
         try {
             Template template = cfg.getTemplate("template.ftl");
-            handleMD2Html(template, renderer, parser, nodeList);
+            handleMD2Html(template, renderer, parser, allFileNodeList);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     private static void handleMD2Html(Template template,
