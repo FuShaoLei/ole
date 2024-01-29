@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        new Main().run(args);
+        new Main().run(new String[]{"-g=C:\\Users\\spiderman\\Desktop\\ole-demo"});
     }
 
     private void run(String[] args) {
@@ -20,28 +20,12 @@ public class Main {
         if (oleOption.isHelpNeeded()) {
             printUsage(oleOption);
 
-            System.err.println("==> user.dir = " + System.getProperty("user.dir"));
-
-            System.err.println("==> java.class.path = "+System.getProperty("java.class.path"));
-
-            String currentDir = Paths.get("").toAbsolutePath().toString();
-            System.out.println("currentDirectory: " + currentDir);
-
-            String newFileCurrentDir = new File("").getAbsolutePath().toString();
-            System.out.println("newFileCurrentDir: " + newFileCurrentDir);
-
-            try {String callerPath = Main.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
-                System.out.println("调用程序的路径是：" + callerPath);
-
-            } catch (Exception e){}
-
-
             return;
         }
 
         if (oleOption.isGen()) {
-            System.err.println("help oleOption.getRootGenLocalPath()= " + oleOption.getRootGenLocalPath());
-            ole.generate(oleOption.getRootGenLocalPath());
+            System.err.println("help oleOption.getLocalPath()= " + oleOption.getLocalPath());
+            ole.generate(oleOption.getLocalPath());
             return;
         }
 

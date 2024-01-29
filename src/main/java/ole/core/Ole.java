@@ -156,6 +156,18 @@ public class Ole {
                 }
             }
         }
+
+        rootNodeList.sort(new Comparator<FileNode>() {
+            @Override
+            public int compare(FileNode o1, FileNode o2) {
+                if (o1.isArticle() && o2.isFolder()) {
+                    return -1;
+                } else if (o2.isArticle() && o1.isFolder()) {
+                    return 1;
+                }
+                return 0;
+            }
+        });
         return rootNodeList;
     }
 
