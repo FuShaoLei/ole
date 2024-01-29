@@ -1,3 +1,4 @@
+<#ftl encoding="UTF-8">
 <#macro renderObjects nodeList>
     <#list nodeList as nodeItem>
         <#assign indentation = ""?right_pad(nodeItem.level,">")>

@@ -16,6 +16,7 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class Ole {
@@ -96,16 +97,18 @@ public class Ole {
 
                     input.put("nodeList", allFileNodeList);
 
-                    File inputFile = new File(fileNode.getLocalPath());
-                    File outputFile = new File(getLocalOutputPath(fileNode.getName()));
+                    FileInputStream fileInputStream = new FileInputStream(fileNode.getLocalPath());
+                    InputStreamReader isr = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
 
-                    Node document = parser.parseReader(new FileReader(inputFile));
+                    Node document = parser.parseReader(new BufferedReader(isr));
 
-                    input.put("title", inputFile.getName());
+                    input.put("title", fileNode.getName());
                     input.put("article", renderer.render(document));
 
-                    PrintWriter writer = new PrintWriter(outputFile);
-                    template.process(input, writer);
+                    FileOutputStream fos = new FileOutputStream(getLocalOutputPath(fileNode.getName()));
+                    OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+
+                    template.process(input, new BufferedWriter(osw));
                 } catch (Exception e) {
 
                 }
@@ -133,7 +136,6 @@ public class Ole {
         if (files == null) return null;
 
         for (File itemFile : files) {
-//            System.err.println("itemFile.getName() = " + itemFile.getName());
 
             if (itemFile.isDirectory()) {
                 FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
