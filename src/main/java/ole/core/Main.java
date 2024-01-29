@@ -24,7 +24,6 @@ public class Main {
         }
 
         if (oleOption.isGen()) {
-            System.err.println("help oleOption.getLocalPath()= " + oleOption.getLocalPath());
             ole.generate(oleOption.getLocalPath());
             return;
         }

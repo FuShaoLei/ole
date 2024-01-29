@@ -31,6 +31,7 @@ public class Ole {
 
 
     public void generate(String rootLocalPath) {
+        System.err.println("(づ￣ 3￣)づ Ole ~");
         System.err.println("rootLocalPath = " + rootLocalPath);
         mRootLocalPath = rootLocalPath;
 
