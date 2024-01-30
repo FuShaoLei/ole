@@ -54,12 +54,12 @@ public class Ole {
         }
     }
 
-    private static void handleGenerate() {
+    private void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(mRootLocalPath + Instant.CONTENT_URL);
         allFileNodeList = nodeList;
-//        nodeList.forEach(System.err::println);
+        nodeList.forEach(System.err::println);
 
-        ready2Generate();
+//        ready2Generate();
 
     }
 
@@ -127,7 +127,7 @@ public class Ole {
     /**
      * 组织数据
      */
-    private static List<FileNode> OrganizeRootData(String path) {
+    private List<FileNode> OrganizeRootData(String path) {
         List<FileNode> rootNodeList = new ArrayList<>();
         File inputFile = new File(path);
 
@@ -177,7 +177,7 @@ public class Ole {
     /**
      * 获取文件夹下的数据信息
      */
-    private static FileNode getNode(File rootFile, int level) {
+    private FileNode getNode(File rootFile, int level) {
         if (rootFile.isFile()) {
             return getArticleNode(rootFile, level + 1);
         } else if (rootFile.isDirectory()) {
@@ -199,13 +199,33 @@ public class Ole {
     }
 
 
-    private static FileNode getArticleNode(@NotNull File itemFile, int level) {
+    private FileNode getArticleNode(@NotNull File itemFile, int level) {
+
         FileNode article = new FileNode(FileNode.Type.FILE);
         article.setName(itemFile.getName());
         article.setLocalPath(itemFile.getAbsolutePath());
         article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(itemFile.getName()));
         article.setLevel(level);
+//
+//        System.err.println("item name = " + itemFile);
+//        System.err.println("item parent = " + itemFile.getParent());
+//        System.err.println("item url = " + article.getUrl());
+
+        System.err.println("getWebUrl = " + getWebUrl(itemFile));
         return article;
+    }
+
+    private String getWebUrl(File file) {
+        String contentAbsolutePath = mRootLocalPath + Instant.CONTENT_URL;
+
+        if (file.getParent().contains(contentAbsolutePath) && file.getParent().length() > contentAbsolutePath.length()) {
+            String middlePath = file.getParent().substring(contentAbsolutePath.length()).replace("\\", "/");
+
+            return (ymlData.get(Instant.BASE_URL) + middlePath + "/" + getHtmlName(file.getName())).replace("//","/");
+        } else {
+            return (ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(file.getName())).replace("//","/");
+        }
+
     }
 
     /**
@@ -228,6 +248,10 @@ public class Ole {
     }
 
     private static String getWebUrl(@NotNull String fileName) {
+        return fileName.replace(" ", "_").replace(".md", ".html");
+    }
+
+    private static String getHtmlName(@NotNull String fileName) {
         return fileName.replace(" ", "_").replace(".md", ".html");
     }
 
