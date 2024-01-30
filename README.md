@@ -4,7 +4,10 @@ a tool make md to html
 
 ## Live Demo
 
-[look ->](https://github.com/FuShaoLei/ole-demo)
+
+
+- [live demo ->](https://fushaolei.github.io/ole-demo)
+- [source file  ->](https://github.com/FuShaoLei/ole-demo)
 
 ## How to Use
 
