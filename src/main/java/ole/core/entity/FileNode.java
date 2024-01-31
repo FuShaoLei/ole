@@ -36,6 +36,8 @@ public class FileNode implements Serializable {
      */
     private String localPath;
 
+    private String outputLocalPath;
+
     /**
      * 文件的内容
      */
@@ -112,6 +114,14 @@ public class FileNode implements Serializable {
         this.content = content;
     }
 
+    public String getOutputLocalPath() {
+        return outputLocalPath;
+    }
+
+    public void setOutputLocalPath(String outputLocalPath) {
+        this.outputLocalPath = outputLocalPath;
+    }
+
     public List<FileNode> getFileNodeList() {
         return fileNodeList;
     }
@@ -127,6 +137,7 @@ public class FileNode implements Serializable {
                 ", name='" + name + '\'' +
                 ", url='" + url + '\'' +
                 ", localPath='" + localPath + '\'' +
+                ", outputLocalPath='" + outputLocalPath + '\'' +
                 ", content='" + content + '\'' +
                 ", level=" + level +
                 ", fileNodeList=" + fileNodeList +

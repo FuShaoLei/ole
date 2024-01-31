@@ -1,6 +1,7 @@
 package ole.core;
 
 import com.sun.istack.internal.NotNull;
+import com.sun.istack.internal.Nullable;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateExceptionHandler;
@@ -57,9 +58,9 @@ public class Ole {
     private void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(mRootLocalPath + Instant.CONTENT_URL);
         allFileNodeList = nodeList;
-        nodeList.forEach(System.err::println);
+//        nodeList.forEach(System.err::println);
 
-//        ready2Generate();
+        ready2Generate();
 
     }
 
@@ -106,16 +107,20 @@ public class Ole {
                     input.put("title", fileNode.getName());
                     input.put("article", renderer.render(document));
 
-                    FileOutputStream fos = new FileOutputStream(getLocalOutputPath(fileNode.getName()));
+                    FileOutputStream fos = new FileOutputStream(fileNode.getOutputLocalPath());
                     OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
 
                     template.process(input, new BufferedWriter(osw));
                 } catch (Exception e) {
-
+                    e.printStackTrace();
                 }
 
             } else if (fileNode.isFolder()) {
                 List<FileNode> folderNodeList = fileNode.getFileNodeList();
+//                 创建目录
+
+                FolderUtils.createDirectoryIfNotExists(fileNode.getOutputLocalPath());
+
                 if (folderNodeList != null) {
                     handleMD2Html(template, renderer, parser, folderNodeList);
                 }
@@ -141,6 +146,8 @@ public class Ole {
             if (itemFile.isDirectory()) {
                 FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
                 folder.setName(itemFile.getName());
+                folder.setLocalPath(itemFile.getAbsolutePath());
+                folder.setOutputLocalPath(getOutPutPath(itemFile));
                 folder.setLevel(rootLevel);
                 File[] direFiles = itemFile.listFiles();
                 if (direFiles != null) {
@@ -183,6 +190,8 @@ public class Ole {
         } else if (rootFile.isDirectory()) {
             FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
             folder.setName(rootFile.getName());
+            folder.setLocalPath(rootFile.getAbsolutePath());
+            folder.setOutputLocalPath(getOutPutPath(rootFile));
             folder.setLevel(level + 1);
             File[] direFiles = rootFile.listFiles();
             List<FileNode> childrenNodeList = new ArrayList<>();
@@ -204,39 +213,107 @@ public class Ole {
         FileNode article = new FileNode(FileNode.Type.FILE);
         article.setName(itemFile.getName());
         article.setLocalPath(itemFile.getAbsolutePath());
-        article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(itemFile.getName()));
-        article.setLevel(level);
-//
-//        System.err.println("item name = " + itemFile);
-//        System.err.println("item parent = " + itemFile.getParent());
-//        System.err.println("item url = " + article.getUrl());
 
-        System.err.println("getWebUrl = " + getWebUrl(itemFile));
+        article.setUrl(getWebUrl(itemFile));
+        article.setOutputLocalPath(getOutPutPath(itemFile));
+        article.setLevel(level);
+
+
         return article;
     }
 
-    private String getWebUrl(File file) {
+    private String getOutPutPath(File file) {
+        String outPutPath = "";
+        String middlePath = getMiddlePath(file);
+
+        if (middlePath != null) {
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + middlePath + "\\" + getHtmlName(file.getName());
+        } else {
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + getHtmlName(file.getName());
+
+        }
+
+
+        return outPutPath.replace("\\\\", "\\");
+
+    }
+
+    private String getOutPutPath(File file, String fileName) {
+        String outPutPath = "";
+        String middlePath = getMiddlePath(file);
+
+        if (middlePath != null) {
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + middlePath + "\\" + getHtmlName(fileName);
+        } else {
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + getHtmlName(fileName);
+
+        }
+
+        return outPutPath.replace("\\\\", "\\");
+
+    }
+
+    @Nullable
+    private String getMiddlePath(File file) {
+        String contentAbsolutePath = mRootLocalPath + Instant.CONTENT_URL;
+        if (file.getParent().contains(contentAbsolutePath) && file.getParent().length() > contentAbsolutePath.length()) {
+            return file.getParent().substring(contentAbsolutePath.length());
+        } else {
+            return null;
+        }
+
+    }
+
+    private String getWebUrl22(File file) {
         String contentAbsolutePath = mRootLocalPath + Instant.CONTENT_URL;
 
         if (file.getParent().contains(contentAbsolutePath) && file.getParent().length() > contentAbsolutePath.length()) {
             String middlePath = file.getParent().substring(contentAbsolutePath.length()).replace("\\", "/");
 
-            return (ymlData.get(Instant.BASE_URL) + middlePath + "/" + getHtmlName(file.getName())).replace("//","/");
+            return (ymlData.get(Instant.BASE_URL) + middlePath + "/" + getHtmlName(file.getName())).replace("//", "/");
         } else {
-            return (ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(file.getName())).replace("//","/");
+            return (ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(file.getName())).replace("//", "/");
         }
 
+    }
+
+    private String getWebUrl(File file) {
+        String webUrl = "";
+        String middlePath = getMiddlePath(file).replace("\\", "/");
+
+        if (middlePath != null) {
+            webUrl = ymlData.get(Instant.BASE_URL) + "/" + middlePath + "/" + getHtmlName(file.getName());
+        } else {
+            webUrl = ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(file.getName());
+        }
+
+        return webUrl.replaceAll("/+", "/");
+    }
+
+    private String getWebUrl(File file, String fileName) {
+        String webUrl = "";
+        String middlePath = getMiddlePath(file);
+
+        if (middlePath != null) {
+            webUrl = ymlData.get(Instant.BASE_URL) + "/" + middlePath.replace("\\", "/") + "/" + getHtmlName(fileName);
+        } else {
+            webUrl = ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(fileName);
+        }
+
+
+        return webUrl.replaceAll("/+", "/");
     }
 
     /**
      * @param itemFile
      * @param name     指定html名
      */
-    private static FileNode getArticleNode(@NotNull File itemFile, String name, int level) {
+    private FileNode getArticleNode(@NotNull File itemFile, String name, int level) {
         FileNode article = new FileNode(FileNode.Type.FILE);
         article.setName(name);
         article.setLocalPath(itemFile.getAbsolutePath());
-        article.setUrl(ymlData.get(Instant.BASE_URL) + getWebUrl(name));
+        article.setUrl(getWebUrl(itemFile, name));
+        article.setOutputLocalPath(getOutPutPath(itemFile, name));
         article.setLevel(level);
         return article;
     }

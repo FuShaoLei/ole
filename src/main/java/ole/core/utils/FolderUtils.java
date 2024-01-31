@@ -15,4 +15,18 @@ public class FolderUtils {
         }
         publicFile.delete();
     }
+
+    public static boolean createDirectoryIfNotExists(String path) {
+        File directory = new File(path);
+
+        // 判断路径是否存在
+        if (!directory.exists()) {
+            // 如果路径不存在，则创建路径
+
+            return directory.mkdirs();
+
+        } else {
+            return true;
+        }
+    }
 }
