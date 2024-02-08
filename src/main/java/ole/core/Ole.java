@@ -279,9 +279,10 @@ public class Ole {
 
     private String getWebUrl(File file) {
         String webUrl = "";
-        String middlePath = getMiddlePath(file).replace("\\", "/");
+        String middlePath = getMiddlePath(file);
 
         if (middlePath != null) {
+            middlePath = middlePath.replace("\\", "/");
             webUrl = ymlData.get(Instant.BASE_URL) + "/" + middlePath + "/" + getHtmlName(file.getName());
         } else {
             webUrl = ymlData.get(Instant.BASE_URL) + "/" + getHtmlName(file.getName());

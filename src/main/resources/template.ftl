@@ -31,6 +31,7 @@
             --color-embellish: #26282E;
 
             --font-main: 'Noto Serif SC', serif;
+            --font-code: 'Roboto Mono', monospace;
         }
 
         body, html {
@@ -63,10 +64,12 @@
             color: var(--color-text-main);
             text-decoration: none;
         }
-        body a:hover{
+
+        body a:hover {
             color: var(--color-theme-main);
         }
 
+        /* 总体框架 */
         .leftArea {
             font-size: .9rem;
             position: fixed;
@@ -97,9 +100,40 @@
             font-size: 1rem;
             color: antiquewhite;
         }
-        .article-item{
+
+        .article-item {
             margin: 2px 0;
         }
+
+        /* 文章样式 */
+        pre {
+            background: var(--color-embellish)!important;
+            padding: 1em;
+            overflow-x: auto;
+        }
+
+        code {
+            background-color: var(--color-embellish);
+            font-family: var(--font-code);
+            font-size: 15px;
+            padding: 0 5px;
+        }
+
+        pre code {
+            border: none;
+            background: none;
+            font-family: var(--font-code);
+            font-size: 15px;
+        }
+
+        pre code::before {
+            content: none;
+        }
+
+        pre code::after {
+            content: none;
+        }
+
     </style>
     <title>${title}</title>
 </head>
