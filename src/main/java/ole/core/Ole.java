@@ -14,6 +14,12 @@ import org.commonmark.ext.gfm.tables.TablesExtension;
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandler;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.*;
@@ -29,6 +35,44 @@ public class Ole {
     private static String mRootLocalPath = "";
     private static Map<String, Object> ymlData = new HashMap<>();
     private static List<FileNode> allFileNodeList = new ArrayList<>();
+
+
+    public void runServer(String path) {
+        generate(path);
+        startRunServer();
+    }
+
+    public void startRunServer() {
+        try {
+
+            Server server = new Server(1313);
+
+
+            ResourceHandler resourceHandler = new ResourceHandler();
+
+            resourceHandler.setResourceBase(mRootLocalPath + Instant.PUBLISH_URL);
+            resourceHandler.setDirectoriesListed(true);
+            resourceHandler.setWelcomeFiles(new String[]{"index", "index.html"});
+
+            ContextHandler contextHandler = new ContextHandler();
+            contextHandler.setContextPath((String) ymlData.get(Instant.BASE_URL));
+            contextHandler.setHandler(resourceHandler);
+
+            HandlerList handlers = new HandlerList();
+
+            handlers.setHandlers(new Handler[]{contextHandler, new DefaultHandler()});
+
+            server.setHandler(handlers);
+            server.start();
+            server.join();
+            server.setDumpAfterStart(false);
+            server.setDumpBeforeStop(false);
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     public void generate(String rootLocalPath) {

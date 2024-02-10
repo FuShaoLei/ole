@@ -11,11 +11,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        new Main().run(args);
+        new Main().run(new String[]{"-sp=F:\\code\\base"});
+//        new Main().run(args);
     }
 
     private void run(String[] args) {
         OleOption oleOption = new Main().parseArguments(args);
+
+        if (oleOption.isRunServer()) {
+            System.err.println("欸嘿嘿");
+        }
 
         if (oleOption.isHelpNeeded()) {
             printUsage(oleOption);
@@ -27,6 +32,12 @@ public class Main {
             ole.generate(oleOption.getLocalPath());
             return;
         }
+
+        if (oleOption.isRunServer()&& oleOption.isHasPath()) {
+            ole.runServer(oleOption.getPath());
+            return;
+        }
+
 
 
     }
