@@ -11,8 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        new Main().run(new String[]{"-sp=F:\\code\\base"});
-//        new Main().run(args);
+        new Main().run(args);
     }
 
     private void run(String[] args) {
@@ -25,6 +24,13 @@ public class Main {
         if (oleOption.isHelpNeeded()) {
             printUsage(oleOption);
 
+            return;
+        }
+
+        if (oleOption.isCarve()) {
+            String carvePath = System.getProperty("user.dir");
+//            System.err.println("carvePath = "+carvePath);
+            ole.generate(carvePath);
             return;
         }
 

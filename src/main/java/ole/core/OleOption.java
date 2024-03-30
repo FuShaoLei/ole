@@ -7,6 +7,7 @@ import picocli.CommandLine.Option;
 @Command(name = "ole", description = "a tool make md file to html", mixinStandardHelpOptions = true)
 public class OleOption {
 
+    @Deprecated
     @Option(names = {"-g", "--genPath"}, description = "generate")
     private String localPath;
 
@@ -20,6 +21,14 @@ public class OleOption {
     @Option(names = {"-p", "--path"}, description = "generate fucking path")
     private String path;
 
+
+    @Option(names = {"-c", "--carve"}, description = "real generate publish thing ~")
+    private boolean carve;
+
+
+    public boolean isCarve() {
+        return carve;
+    }
 
     public boolean isGen() {
         return localPath != null;
