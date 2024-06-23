@@ -46,6 +46,18 @@
             <artifactId>jetty-servlet</artifactId>
             <version>9.4.44.v20210927</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>
