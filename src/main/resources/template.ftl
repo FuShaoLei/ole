@@ -25,7 +25,7 @@
         :root {
             --left-with: 300px;
             --color-bg: #1E1F22;
-            --color-theme-main: antiquewhite;
+            --color-theme-main: #28ABAE;
             --color-text-main: #A9A9B3;
             --color-text-secondary: #333437;
             --color-embellish: #26282E;
@@ -98,7 +98,7 @@
         .folder-name {
             font-weight: 900;
             font-size: 1rem;
-            color: antiquewhite;
+            color: var(--color-theme-main);
         }
 
         .article-item {
@@ -107,8 +107,8 @@
 
         /* 文章样式 */
         pre {
-            background: var(--color-embellish)!important;
-            padding: 1em;
+            /*background: var(--color-embellish)!important;*/
+            /*padding: 1em;*/
             overflow-x: auto;
         }
 
@@ -134,6 +134,51 @@
             content: none;
         }
 
+        blockquote {
+            margin: 0;
+        }
+
+        blockquote p {
+            display: contents;
+        }
+
+        blockquote::before {
+            content: '> ';
+            color: var(--color-theme-main);
+            font-weight: 900;
+        }
+
+        .article-wrapper a {
+            color: var(--color-theme-main);
+        }
+        .article-wrapper a::after{
+            content: '↗';
+        }
+        .article-wrapper a:hover{
+            text-decoration: underline;
+        }
+
+        .article-wrapper h1::after{
+            content: '#';
+            color: var(--color-theme-main);
+            margin-left: 7px;
+            font-weight: 900;
+        }
+
+        .article-wrapper h2::after{
+            content: '##';
+            color: var(--color-theme-main);
+            margin-left: 7px;
+            font-weight: 900;
+        }
+
+        .article-wrapper h3::after{
+            content: '###';
+            color: var(--color-theme-main);
+            margin-left: 7px;
+            font-weight: 900;
+        }
+
     </style>
     <title>${title}</title>
 </head>
@@ -142,6 +187,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;300;400;700;900&family=Roboto+Mono&display=swap"
       rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/rainbow.css">
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/highlight.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <body>
@@ -158,6 +205,9 @@
         </div>
     </article>
 </main>
+<script>
+    hljs.highlightAll();
+</script>
 </body>
 </html>
 
