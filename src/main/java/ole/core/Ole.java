@@ -80,7 +80,7 @@ public class Ole {
         System.err.println("rootLocalPath = " + rootLocalPath);
         mRootLocalPath = rootLocalPath;
 
-        String configUrl = mRootLocalPath + "\\" + Instant.CONFIG_FILE; // TODO 这里的\\我感觉还要在考虑下，感觉兼容性不是很好
+        String configUrl = mRootLocalPath + Instant.SEPARATOR + Instant.CONFIG_FILE; // TODO 这里的\\我感觉还要在考虑下，感觉兼容性不是很好
 
         try (InputStream inputStream = new FileInputStream(configUrl)) {
             Yaml yaml = new Yaml();
@@ -271,9 +271,9 @@ public class Ole {
         String middlePath = getMiddlePath(file);
 
         if (middlePath != null) {
-            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + middlePath + "\\" + getHtmlName(file.getName());
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + Instant.SEPARATOR + middlePath + Instant.SEPARATOR + getHtmlName(file.getName());
         } else {
-            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + getHtmlName(file.getName());
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + Instant.SEPARATOR + getHtmlName(file.getName());
 
         }
 
@@ -287,9 +287,9 @@ public class Ole {
         String middlePath = getMiddlePath(file);
 
         if (middlePath != null) {
-            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + middlePath + "\\" + getHtmlName(fileName);
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + Instant.SEPARATOR + middlePath + Instant.SEPARATOR + getHtmlName(fileName);
         } else {
-            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + "\\" + getHtmlName(fileName);
+            outPutPath = mRootLocalPath + Instant.PUBLISH_URL + Instant.SEPARATOR + getHtmlName(fileName);
 
         }
 

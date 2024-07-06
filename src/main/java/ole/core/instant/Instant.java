@@ -1,6 +1,9 @@
 package ole.core.instant;
 
+import java.io.File;
+
 public class Instant {
+    public static final String SEPARATOR = File.separator;
     public static final String CONFIG_FILE = "config.yml";
     public static final String BASE_URL = "baseUrl";
 
@@ -8,13 +11,13 @@ public class Instant {
     /**
      * 原始的md文件的路径
      */
-    public static final String CONTENT_URL = "\\content";
+    public static final String CONTENT_URL = SEPARATOR + "content";
 
 
     /**
      * 编译过后的html文件路径
      */
-    public static final String PUBLISH_URL = "\\publish";
+    public static final String PUBLISH_URL = SEPARATOR + "publish";
 
 
     /**
