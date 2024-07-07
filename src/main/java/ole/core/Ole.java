@@ -205,7 +205,7 @@ public class Ole {
             } else if (itemFile.isFile()) { // 这里其实要做一个判断，判断是否有readme.md这个文件
                 if (itemFile.getName().equals(Instant.ROOT_INDEX_FILE)) {
                     rootNodeList.add(getArticleNode(itemFile, "index.html", rootLevel));
-                } else {
+                } else if (itemFile.getName().endsWith(".md") || itemFile.getName().endsWith(".html")){
                     rootNodeList.add(getArticleNode(itemFile, rootLevel));
                 }
             }

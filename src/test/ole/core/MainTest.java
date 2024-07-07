@@ -8,6 +8,6 @@ public class MainTest {
 
     @Test
     public void main() {
-        Main.main(new String[]{"-sp=/Users/fushaolei/note/ole_test"}); // D:\code\test\ole-test
+        Main.main(new String[]{"-sp=/Users/fushaolei/note/notepad"}); // D:\code\test\ole-test
     }
 }
