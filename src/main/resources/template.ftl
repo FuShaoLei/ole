@@ -4,7 +4,7 @@
         <#assign indentation = ""?right_pad(nodeItem.level,">")>
         <#if nodeItem.isArticle() >
             <div class="article-item">
-                ${indentation} <a href="${nodeItem.url}">${nodeItem.name}</a>
+                <a href="${nodeItem.url}" class="nav_link">${nodeItem.name}</a>
             </div>
         <#elseif nodeItem.isFolder()>
             <div class="folder-wrapper <#if nodeItem.level == 0 >folder-top-wrapper</#if>">
@@ -55,7 +55,7 @@
 
 
         body {
-            background-color: var(--color-bg);
+            background: var(--color-text-secondary);
             color: var(--color-text-main);
             font-family: var(--font-main);
         }
@@ -70,11 +70,18 @@
         }
 
         /* 总体框架 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-content: center;
+        }
+        .main-wrapper {
+            width: 1200px;
+        }
         .leftArea {
             font-size: .9rem;
             position: fixed;
             top: 0;
-            left: 0;
             width: var(--left-with);
             height: 100%;
             overflow: auto;
@@ -85,6 +92,8 @@
             font-size: 1.1rem;
             margin-left: var(--left-with);
             padding: 30px;
+            min-height: 100vh;
+            background-color: var(--color-bg);
         }
 
         .article-wrapper img {
@@ -99,10 +108,23 @@
             font-weight: 900;
             font-size: 1rem;
             color: var(--color-theme-main);
+            margin-bottom: 10px;
         }
 
         .article-item {
-            margin: 2px 0;
+            margin: 0;
+        }
+        .article-item a {
+            display: block;
+            padding: 7px 8px;
+        }
+        .article-item a:hover{
+            color: var(--color-text-main);
+            background: var(--color-bg);
+        }
+        .nav_link.active_link {
+            color: var(--color-text-main);
+            background: var(--color-bg);
         }
 
         /* 文章样式 */
@@ -192,7 +214,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <body>
-<main>
+<main class="main-wrapper">
     <aside class="leftArea">
         <div style="padding: 30px">
             <@renderObjects nodeList/>
@@ -207,6 +229,33 @@
 </main>
 <script>
     hljs.highlightAll();
+
+    let links = document.querySelectorAll(".nav_link");
+
+    function isActive(pathname) {
+        let rootPath = decodeURIComponent(window.location.pathname)
+        let path = pathname + "/"
+
+        console.log("isActive:rootPath = "+rootPath)
+        console.log("isActive:pathname = "+pathname)
+        console.log("isActive:path = "+path)
+
+        // const decodedString = decodeURIComponent(encodedString);
+
+
+        return pathname === rootPath || path === rootPath;
+    }
+
+    for (let link of links) {
+        let linkPath = link.getAttribute("href");
+
+        console.log("linkPath => "+linkPath);
+
+        if (isActive(linkPath)) {
+            console.log("active linkPath => "+linkPath)
+            link.className = "nav_link active_link";
+        }
+    }
 </script>
 </body>
 </html>
