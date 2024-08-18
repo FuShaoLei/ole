@@ -55,7 +55,7 @@
 
 
         body {
-            background: var(--color-text-secondary);
+            background: var(--color-embellish);
             color: var(--color-text-main);
             font-family: var(--font-main);
         }
@@ -200,6 +200,16 @@
             margin-left: 7px;
             font-weight: 900;
         }
+
+        .article-wrapper strong {
+            text-decoration: var(--color-theme-main) wavy underline;
+            /*color: var(--color-theme-main);*/
+        }
+
+        .article-wrapper ul>li {
+            margin: 5px;
+        }
+
 
     </style>
     <title>${title}</title>
