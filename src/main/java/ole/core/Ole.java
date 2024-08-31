@@ -102,7 +102,7 @@ public class Ole {
     private void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(mRootLocalPath + Instant.CONTENT_URL);
         allFileNodeList = nodeList;
-//        nodeList.forEach(System.err::println);
+        nodeList.forEach(System.err::println);
 
         ready2Generate();
 
@@ -197,12 +197,20 @@ public class Ole {
                 if (direFiles != null) {
                     List<FileNode> childrenNodeList = new ArrayList<>();
                     for (File direFile : direFiles) {
-                        childrenNodeList.add(getNode(direFile, rootLevel));
+                        FileNode tempNode = getNode(direFile, rootLevel);
+                        if (tempNode != null) {
+                            childrenNodeList.add(tempNode);
+                        }
+
                     }
+                    childrenNodeList.sort(((o1, o2) -> o1.getName().compareTo(o2.getName())));
                     folder.setFileNodeList(childrenNodeList);
                 }
                 rootNodeList.add(folder);
             } else if (itemFile.isFile()) { // 这里其实要做一个判断，判断是否有readme.md这个文件
+
+                System.err.println("fileName = "+itemFile.getName() + " is md = "+itemFile.getName().endsWith(".md"));
+
                 if (itemFile.getName().equals(Instant.ROOT_INDEX_FILE)) {
                     rootNodeList.add(getArticleNode(itemFile, "index.html", rootLevel));
                 } else if (itemFile.getName().endsWith(".md") || itemFile.getName().endsWith(".html")){
@@ -229,7 +237,7 @@ public class Ole {
      * 获取文件夹下的数据信息
      */
     private FileNode getNode(File rootFile, int level) {
-        if (rootFile.isFile()) {
+        if (rootFile.isFile() && rootFile.getName().endsWith(".md")) {
             return getArticleNode(rootFile, level + 1);
         } else if (rootFile.isDirectory()) {
             FileNode folder = new FileNode(FileNode.Type.DIRECTORY);
@@ -241,7 +249,10 @@ public class Ole {
             List<FileNode> childrenNodeList = new ArrayList<>();
             if (direFiles != null) {
                 for (File itemFile : direFiles) {
-                    childrenNodeList.add(getNode(itemFile, level + 1));
+                    FileNode tempNode = getNode(itemFile, level + 1);
+                    if (tempNode != null) {
+                        childrenNodeList.add(tempNode);
+                    }
                 }
                 folder.setFileNodeList(childrenNodeList);
             }

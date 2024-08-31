@@ -246,26 +246,27 @@
         let rootPath = decodeURIComponent(window.location.pathname)
         let path = pathname + "/"
 
-        console.log("isActive:rootPath = "+rootPath)
-        console.log("isActive:pathname = "+pathname)
-        console.log("isActive:path = "+path)
-
-        // const decodedString = decodeURIComponent(encodedString);
-
-
         return pathname === rootPath || path === rootPath;
     }
 
     for (let link of links) {
         let linkPath = link.getAttribute("href");
 
-        console.log("linkPath => "+linkPath);
-
         if (isActive(linkPath)) {
-            console.log("active linkPath => "+linkPath)
             link.className = "nav_link active_link";
         }
     }
+
+    // 页面加载后滚动到 .nac-s 元素
+    window.onload = function() {
+        // 获取第一个 .nac-s 元素
+        const targetElement = document.querySelector('.active_link');
+        if (targetElement) {
+            // 将该元素滚动到视图顶部
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    };
+
 </script>
 </body>
 </html>
