@@ -87,8 +87,12 @@
             top: 0;
             width: var(--left-with);
             height: 100%;
-            overflow: auto;
+            overflow: hidden;
             border-right: 1px solid var(--color-divider);
+        }
+
+        .leftArea:hover{
+            overflow: auto;
         }
 
         .rightArea {
@@ -263,7 +267,7 @@
         const targetElement = document.querySelector('.active_link');
         if (targetElement) {
             // 将该元素滚动到视图顶部
-            targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     };
 
