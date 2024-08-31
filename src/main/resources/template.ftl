@@ -26,9 +26,12 @@
             --left-with: 300px;
             --color-bg: #1E1F22;
             --color-theme-main: #28ABAE;
-            --color-text-main: #A9A9B3;
+            --color-text-main: #bcbcc3;
             --color-text-secondary: #333437;
             --color-embellish: #26282E;
+
+            --color-aside-text:rgba(235, 235, 235, .6);
+            --color-divider: rgba(84, 84, 84, .48);
 
             --font-main: 'Noto Serif SC', serif;
             --font-code: 'Roboto Mono', monospace;
@@ -55,7 +58,7 @@
 
 
         body {
-            background: var(--color-embellish);
+            background: var(--color-bg);
             color: var(--color-text-main);
             font-family: var(--font-main);
         }
@@ -85,7 +88,7 @@
             width: var(--left-with);
             height: 100%;
             overflow: auto;
-            background: var(--color-embellish);
+            border-right: 1px solid var(--color-divider);
         }
 
         .rightArea {
@@ -93,7 +96,6 @@
             margin-left: var(--left-with);
             padding: 30px;
             min-height: 100vh;
-            background-color: var(--color-bg);
         }
 
         .article-wrapper img {
@@ -101,14 +103,13 @@
         }
 
         .folder-top-wrapper {
-            margin-top: 12px;
+            margin-top: 30px;
         }
 
         .folder-name {
             font-weight: 900;
             font-size: 1rem;
-            color: var(--color-theme-main);
-            margin-bottom: 10px;
+            margin-bottom: 3px;
         }
 
         .article-item {
@@ -116,15 +117,14 @@
         }
         .article-item a {
             display: block;
-            padding: 7px 8px;
+            padding: 4px 0;
+            color: var(--color-aside-text);
         }
         .article-item a:hover{
             color: var(--color-text-main);
-            background: var(--color-bg);
         }
         .nav_link.active_link {
-            color: var(--color-text-main);
-            background: var(--color-bg);
+            color: var(--color-theme-main);
         }
 
         /* 文章样式 */
