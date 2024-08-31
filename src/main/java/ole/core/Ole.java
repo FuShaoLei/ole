@@ -148,7 +148,7 @@ public class Ole {
 
                     Node document = parser.parseReader(new BufferedReader(isr));
 
-                    input.put("title", fileNode.getName());
+                    input.put("title", fileNode.getName().replace(".md",""));
                     input.put("article", renderer.render(document));
 
                     FileOutputStream fos = new FileOutputStream(fileNode.getOutputLocalPath());
@@ -266,7 +266,7 @@ public class Ole {
     private FileNode getArticleNode(@NotNull File itemFile, int level) {
 
         FileNode article = new FileNode(FileNode.Type.FILE);
-        article.setName(itemFile.getName());
+        article.setName(itemFile.getName().replace(".md",""));
         article.setLocalPath(itemFile.getAbsolutePath());
 
         article.setUrl(getWebUrl(itemFile));

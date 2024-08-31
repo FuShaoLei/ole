@@ -214,6 +214,14 @@
             margin: 5px;
         }
 
+        .article-title {
+            font-weight: 900;
+            font-size: 3rem;
+            border-bottom: 1px solid var(--color-divider);
+            padding-bottom: 30px;
+            margin-bottom: 5px;
+        }
+
 
     </style>
     <title>${title}</title>
@@ -236,6 +244,9 @@
     </aside>
 
     <article class="rightArea flex-center">
+        <div class="article-title">
+            ${title}
+        </div>
         <div class="article-wrapper">
             ${article}
         </div>
