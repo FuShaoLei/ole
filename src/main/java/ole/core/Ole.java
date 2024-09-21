@@ -45,8 +45,12 @@ public class Ole {
     public void startRunServer() {
         try {
 
-            Server server = new Server(1313);
+            String baseUrl = (String) ymlData.get(Instant.BASE_URL);
 
+            int port = 1313;
+            Server server = new Server(port);
+
+            System.err.println("live in: " + "http://localhost:" + port + baseUrl);
 
             ResourceHandler resourceHandler = new ResourceHandler();
 
@@ -55,7 +59,7 @@ public class Ole {
             resourceHandler.setWelcomeFiles(new String[]{"index", "index.html"});
 
             ContextHandler contextHandler = new ContextHandler();
-            contextHandler.setContextPath((String) ymlData.get(Instant.BASE_URL));
+            contextHandler.setContextPath(baseUrl);
             contextHandler.setHandler(resourceHandler);
 
             HandlerList handlers = new HandlerList();
@@ -102,7 +106,7 @@ public class Ole {
     private void handleGenerate() {
         List<FileNode> nodeList = OrganizeRootData(mRootLocalPath + Instant.CONTENT_URL);
         allFileNodeList = nodeList;
-        nodeList.forEach(System.err::println);
+//        nodeList.forEach(System.err::println);
 
         ready2Generate();
 
@@ -209,7 +213,7 @@ public class Ole {
                 rootNodeList.add(folder);
             } else if (itemFile.isFile()) { // 这里其实要做一个判断，判断是否有readme.md这个文件
 
-                System.err.println("fileName = "+itemFile.getName() + " is md = "+itemFile.getName().endsWith(".md"));
+//                System.err.println("fileName = "+itemFile.getName() + " is md = "+itemFile.getName().endsWith(".md"));
 
                 if (itemFile.getName().equals(Instant.ROOT_INDEX_FILE)) {
                     rootNodeList.add(getArticleNode(itemFile, "index.html", rootLevel));
